@@ -33,8 +33,10 @@ module.exports = {
         'IIFEs': true,
       },
     ],
+    'class-methods-use-this': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     'react/react-in-jsx-scope': 'off',
     'react-compiler/react-compiler': 'error',
+    'react/prefer-stateless-function': 'off',
   },
 };
