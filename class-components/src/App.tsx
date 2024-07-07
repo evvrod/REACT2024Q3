@@ -2,6 +2,7 @@ import { Component } from 'react';
 import TopSection from './components/TopSection/TopSection';
 import BottomSection from './components/BottomSection/BottomSection';
 import { Item, fetchStarWars } from './services/apiStarWarsSearch';
+import Footer from './components/Footer/Footer';
 import logo from './assets/Star_Wars_Logo.svg';
 
 import './App.css';
@@ -46,11 +47,14 @@ class App extends Component<object, State> {
 
     return (
       <div className="wrapper">
-        <h1>
-          <img className="logo" src={logo} alt="Logo Star Wars" /> SEARCH
-        </h1>
-        <TopSection onSearch={this.handleSearch} />
-        <BottomSection items={items} loadingApi={loadingApi} error={error} />
+        <main>
+          <h1>
+            <img className="logo" src={logo} alt="Logo Star Wars" /> SEARCH
+          </h1>
+          <TopSection onSearch={this.handleSearch} />
+          <BottomSection items={items} loadingApi={loadingApi} error={error} />
+        </main>
+        <Footer />
       </div>
     );
   }
