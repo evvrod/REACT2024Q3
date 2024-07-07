@@ -1,5 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 
+import './ErrorBoundary.css';
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -29,7 +31,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      return <h2>Oops! Something went wrong. Please try again later.</h2>;
+      return (
+        <div className="overlay">
+          <p className="error-message">
+            Oops! Something went wrong. Please try again later.
+          </p>
+          <button type="button" onClick={() => window.location.reload()}>
+            Reload
+          </button>
+        </div>
+      );
     }
 
     return children;
