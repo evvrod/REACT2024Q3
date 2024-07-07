@@ -1,7 +1,6 @@
 import { Component } from 'react';
-import SearchBar from './components/SearchBar/SearchBar';
-import ItemInfo from './components/ItemInfo/ItemInfo';
-import Spinner from './components/Spinner/Spinner';
+import TopSection from './components/TopSection/TopSection';
+import BottomSection from './components/BottomSection/BottomSection';
 import { Item, fetchStarWars } from './services/apiStarWarsSearch';
 import logo from './assets/Star_Wars_Logo.svg';
 
@@ -42,12 +41,6 @@ class App extends Component<object, State> {
     this.fetchItems(query);
   };
 
-  handleTestingError = () => {
-    this.setState(() => {
-      throw new Error('Testing error');
-    });
-  };
-
   render() {
     const { items, loadingApi, error } = this.state;
 
@@ -56,18 +49,8 @@ class App extends Component<object, State> {
         <h1>
           <img className="logo" src={logo} alt="Logo Star Wars" /> SEARCH
         </h1>
-        <div className="top-section">
-          <SearchBar onSearch={this.handleSearch} />
-          <button type="button" onClick={this.handleTestingError}>
-            Testing Error
-          </button>
-        </div>
-        <div className="bottom-section">
-          {loadingApi && <Spinner />}
-          {error && <div>{error}</div>}
-          {!error &&
-            items.map((item) => <ItemInfo key={item.id} item={item} />)}
-        </div>
+        <TopSection onSearch={this.handleSearch} />
+        <BottomSection items={items} loadingApi={loadingApi} error={error} />
       </div>
     );
   }
