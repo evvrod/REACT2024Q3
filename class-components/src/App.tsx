@@ -2,7 +2,7 @@ import { Component } from 'react';
 import SearchBar from './components/SearchBar/SearchBar';
 import ItemInfo from './components/ItemInfo/ItemInfo';
 import Spinner from './components/Spinner/Spinner';
-import { Item, fetchStarWars } from './services/apiStarWars';
+import { Item, fetchStarWars } from './services/apiStarWarsSearch';
 import logo from './assets/Star_Wars_Logo.svg';
 
 import './App.css';

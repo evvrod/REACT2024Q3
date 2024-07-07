@@ -28,13 +28,15 @@ export interface Item {
 }
 
 export const fetchStarWars = async (query: string): Promise<Item[]> => {
-  const url = `https://swapi.dev/api/people/?search=${query}&page=1`;
-  const response = await fetch(url);
-  if (!response.ok)
-    throw new Error('Failed to fetch data. Please try again later.');
-  let data: ApiCharacter = await response.json();
+  let data: ApiCharacter;
 
-  if (data.count === 0) {
+  if (query) {
+    const url = `https://swapi.dev/api/people/?search=${query}&page=1`;
+    const response = await fetch(url);
+    if (!response.ok)
+      throw new Error('Failed to fetch data. Please try again later.');
+    data = await response.json();
+  } else {
     const url2 = `https://swapi.dev/api/people/?page=1`;
     const response2 = await fetch(url2);
     if (!response2.ok)

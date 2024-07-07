@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Item } from '../../services/apiStarWars';
+import { Item } from '../../services/apiStarWarsSearch';
 
 interface PropsItem {
   item: Item;
