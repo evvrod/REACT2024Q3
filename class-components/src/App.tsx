@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import SearchBar from './components/SearchBar/SearchBar';
+import ItemInfo from './components/ItemInfo/ItemInfo';
 import { Item, fetchStarWars } from './services/apiStarWars';
 
 import './App.css';
@@ -48,12 +49,7 @@ class App extends Component<object, State> {
         <div className="bottom-section">
           {error && <div>{error}</div>}
           {!error &&
-            items.map((item) => (
-              <div key={item.id}>
-                <h2>{item.title}</h2>
-                <div>{item.description.gender}</div>
-              </div>
-            ))}
+            items.map((item) => <ItemInfo key={item.id} item={item} />)}
         </div>
       </div>
     );

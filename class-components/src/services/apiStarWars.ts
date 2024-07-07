@@ -7,7 +7,7 @@ interface Character {
   url: string;
   name: string;
   birth_year: string;
-  gender:  'Male' | 'Female';
+  gender: 'Male' | 'Female';
   height: number;
   hair_color: string;
   eye_color: string;
@@ -19,7 +19,7 @@ export interface Item {
   title: string;
   description: {
     birth_year: string;
-    gender:  'Male' | 'Female';
+    gender: 'Male' | 'Female';
     height: number;
     hair_color: string;
     eye_color: string;
@@ -48,10 +48,10 @@ export const fetchStarWars = async (query: string): Promise<Item[]> => {
     description: {
       birth_year: el.birth_year,
       gender: el.gender,
-      height:el.height,
+      height: el.height,
       hair_color: el.hair_color,
       eye_color: el.eye_color,
       skin_color: el.skin_color,
-    }
+    },
   }));
 };
