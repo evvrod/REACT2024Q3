@@ -3,6 +3,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 import ItemInfo from './components/ItemInfo/ItemInfo';
 import Spinner from './components/Spinner/Spinner';
 import { Item, fetchStarWars } from './services/apiStarWars';
+import logo from './assets/Star_Wars_Logo.svg';
 
 import './App.css';
 
@@ -46,7 +47,9 @@ class App extends Component<object, State> {
 
     return (
       <div className="wrapper">
-        <h1>Star Wars Search</h1>
+        <h1>
+          <img className="logo" src={logo} alt="Logo Star Wars" /> SEARCH
+        </h1>
         <div className="top-section">
           <SearchBar onSearch={this.handleSearch} />
         </div>

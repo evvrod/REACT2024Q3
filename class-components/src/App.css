@@ -17,3 +17,14 @@
   padding: 10px;
   overflow-y: auto;
 }
+
+h1 {
+  color: #ffe81f;
+  background-color: #000000;
+  margin: 0;
+}
+
+.logo {
+  height: 150px;
+  align-self: flex-end;
+}
