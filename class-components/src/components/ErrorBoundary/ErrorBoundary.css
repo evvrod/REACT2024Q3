@@ -1,0 +1,22 @@
+.overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+  background: url('/Night_Sky_Star_Wars.png');
+  background-size: cover;
+  background-position: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.error-message {
+  color: #ffe81f;
+  font-size: 2em;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+}

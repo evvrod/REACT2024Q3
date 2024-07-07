@@ -1,0 +1,4 @@
+cd class-components
+npx prettier --write ./src
+npx prettier --write index.html
+npx eslint ./src

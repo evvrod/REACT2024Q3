@@ -1,0 +1,21 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffe81f;
+  color: #000000;
+  padding: 10px 0;
+}
+
+.footer-icon {
+  height: 50px;
+  width: 50px;
+}
+
+.footer-url {
+  color: #000000;
+}
+
+.footer-url:hover {
+  color: #5574ca;
+}
