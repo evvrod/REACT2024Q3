@@ -42,6 +42,12 @@ class App extends Component<object, State> {
     this.fetchItems(query);
   };
 
+  handleTestingError = () => {
+    this.setState(() => {
+      throw new Error('Testing error');
+    });
+  };
+
   render() {
     const { items, loadingApi, error } = this.state;
 
@@ -52,6 +58,9 @@ class App extends Component<object, State> {
         </h1>
         <div className="top-section">
           <SearchBar onSearch={this.handleSearch} />
+          <button type="button" onClick={this.handleTestingError}>
+            Testing Error
+          </button>
         </div>
         <div className="bottom-section">
           {loadingApi && <Spinner />}
