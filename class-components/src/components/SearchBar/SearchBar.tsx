@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import './SearchBar.css'
+import './SearchBar.css';
 
 interface PropsSearchBar {
   onSearch: (query: string) => void;
