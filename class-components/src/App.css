@@ -4,10 +4,6 @@
   min-height: 100vh;
 }
 
-main {
-  flex: 1;
-}
-
 h1 {
   color: #ffe81f;
   background-color: #000000;

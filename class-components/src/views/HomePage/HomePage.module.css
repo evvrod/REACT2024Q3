@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  gap: 10px;
+  height: 200px;
+}
+
+.left-column {
+  width: 40%;
+  background-color: blue;
+}
+
+.right-column {
+  width: 60%;
+  background-color: red;
+}
+
+.search-block {
+  background-color: rgb(237, 14, 144);
+  height: 100px;
+}
