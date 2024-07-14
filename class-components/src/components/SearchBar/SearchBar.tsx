@@ -1,64 +1,39 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
-import './SearchBar.css';
+import styles from './SearchBar.module.css';
 
 interface PropsSearchBar {
   onSearch: (query: string) => void;
 }
 
-interface StateSearchBar {
-  query: string;
+export default function SearchBar(props: PropsSearchBar) {
+  const [storedQuery, setStoredQuery] = useState('');
+  const { onSearch } = props;
+
+  function handleSearch(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const currentQuery = form.search.value.trim();
+    onSearch(currentQuery);
+    setStoredQuery(currentQuery);
+    localStorage.setItem('searchQuery', storedQuery);
+  }
+
+  function handleInputChange(event: React.ChangeEvent) {
+    const element = event.target as HTMLInputElement;
+    setStoredQuery(element.value);
+  }
+
+  return (
+    <form className={styles.searchBar} onSubmit={handleSearch}>
+      <input
+        name="search"
+        type="text"
+        value={storedQuery}
+        onChange={handleInputChange}
+        placeholder="Search..."
+      />
+      <button type="submit">Search</button>
+    </form>
+  );
 }
-
-class SearchBar extends Component<PropsSearchBar, StateSearchBar> {
-  constructor(props: PropsSearchBar) {
-    super(props);
-    this.state = {
-      query: '',
-    };
-  }
-
-  componentDidMount() {
-    const { onSearch } = this.props;
-    const { query } = this.state;
-    const savedQuery = localStorage.getItem('searchQuery');
-    if (savedQuery) {
-      this.setState({ query: savedQuery });
-      onSearch(savedQuery);
-    } else {
-      onSearch(query);
-    }
-  }
-
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ query: event.target.value });
-  };
-
-  handleSearch = () => {
-    const { query } = this.state;
-    const { onSearch } = this.props;
-    const trimmedQuery = query.trim();
-    localStorage.setItem('searchQuery', trimmedQuery);
-    onSearch(trimmedQuery);
-  };
-
-  render() {
-    const { query } = this.state;
-
-    return (
-      <div className="search-bar">
-        <input
-          type="text"
-          value={query}
-          onChange={this.handleInputChange}
-          placeholder="Search..."
-        />
-        <button type="button" onClick={this.handleSearch}>
-          Search
-        </button>
-      </div>
-    );
-  }
-}
-
-export default SearchBar;
