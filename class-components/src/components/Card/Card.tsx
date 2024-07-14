@@ -14,7 +14,10 @@ export default function Card(props: PropsCard) {
 
   return (
     <div>
-      <Link to={`/details/${id}/?${query}` } onClick={(event) => event.stopPropagation()}>
+      <Link
+        to={`/details/${id}/?${query}`}
+        onClick={(event) => event.stopPropagation()}
+      >
         <h2>{item.name}</h2>
       </Link>
       <ul>

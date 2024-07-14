@@ -2,7 +2,7 @@
   position: absolute;
   background-color: transparent;
   border: none;
-  top:0;
+  top: 0;
   right: 0;
   margin: 20px;
   display: flex;
@@ -50,7 +50,7 @@
 .label-btn {
   margin: 54px 0 0 -20px;
   position: absolute;
-  color:  #000;
+  color: #000;
   font-family: Tahoma, sans-serif;
   font-size: 13px;
   font-weight: bold;

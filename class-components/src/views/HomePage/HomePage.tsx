@@ -10,6 +10,8 @@ import CardList from '../../components/CardList/CardList';
 import Pagination from '../../components/Pagination/Pagination';
 import Spinner from '../../components/Spinner/Spinner';
 
+import useSearchQuery from '../../hooks/useSearchQuery';
+
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
@@ -18,7 +20,7 @@ export default function HomePage() {
 
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [query] = useState('');
+  const [query] = useSearchQuery();
 
   const [previous, setPrevious] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);

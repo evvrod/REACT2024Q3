@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useSearchQuery from '../../hooks/useSearchQuery';
 
 import styles from './SearchBar.module.css';
 
@@ -7,8 +7,8 @@ interface PropsSearchBar {
 }
 
 export default function SearchBar(props: PropsSearchBar) {
-  const [storedQuery, setStoredQuery] = useState('');
   const { onSearch } = props;
+  const [storedQuery, setStoredQuery] = useSearchQuery();
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
