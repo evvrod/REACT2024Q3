@@ -1,9 +1,13 @@
-interface ApiCharacter {
+import fetchStarWarsCharacters from './apiStarWarsCharacters';
+
+export interface ApiCharacters {
   count: number;
+  next: string | null;
+  previous: string | null;
   results: Character[];
 }
 
-interface Character {
+export interface Character {
   url: string;
   name: string;
   birth_year: string;
@@ -14,46 +18,21 @@ interface Character {
   skin_color: string;
 }
 
-export interface Item {
-  id: string;
-  title: string;
-  description: {
-    birth_year: string;
-    gender: 'Male' | 'Female';
-    height: number;
-    hair_color: string;
-    eye_color: string;
-    skin_color: string;
-  };
-}
-
-export const fetchStarWars = async (query: string): Promise<Item[]> => {
-  let data: ApiCharacter;
+export default async function fetchStarWarsSearch(
+  query: string,
+  page: number = 1,
+): Promise<ApiCharacters> {
+  let data: ApiCharacters;
 
   if (query) {
-    const url = `https://swapi.dev/api/people/?search=${query}&page=1`;
+    const url = `https://swapi.dev/api/people/?search=${query}&page=${page}`;
     const response = await fetch(url);
     if (!response.ok)
       throw new Error('Failed to fetch data. Please try again later.');
     data = await response.json();
   } else {
-    const url2 = `https://swapi.dev/api/people/?page=1`;
-    const response2 = await fetch(url2);
-    if (!response2.ok)
-      throw new Error('Failed to fetch data. Please try again later.');
-    data = await response2.json();
+    data = await fetchStarWarsCharacters(page);
   }
 
-  return data.results.map((el) => ({
-    id: el.url,
-    title: el.name,
-    description: {
-      birth_year: el.birth_year,
-      gender: el.gender,
-      height: el.height,
-      hair_color: el.hair_color,
-      eye_color: el.eye_color,
-      skin_color: el.skin_color,
-    },
-  }));
-};
+  return data;
+}

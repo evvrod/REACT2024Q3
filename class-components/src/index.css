@@ -11,11 +11,21 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* colors */
+  --color-primary: #ffe81f;
+  --color-secondary: #5574ca;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1 {
@@ -27,7 +37,7 @@ h1 {
 h2 {
   font-size: 2em;
   line-height: 1.1;
-  color: #5574ca;
+  color: var(--color-secondary);
 }
 
 button {
@@ -42,7 +52,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  background-color: #5574ca;
+  background-color: var(--color-secondary);
 }
 button:focus,
 button:focus-visible {

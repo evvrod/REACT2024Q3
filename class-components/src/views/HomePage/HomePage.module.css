@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  gap: 10px;
+  min-height: 100px;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 40%;
+}
+
+.right-column {
+  position: relative;
+  width: 60%;
+}
+
+.search-block {
+}
