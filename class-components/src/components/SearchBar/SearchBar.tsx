@@ -1,37 +1,52 @@
-import useSearchQuery from '../../hooks/useSearchQuery';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/useRedux';
+import { currentQuerySlice } from '../../store/reducers/CurrentQuery';
+import { currentPageSlice } from '../../store/reducers/CurrentPage';
+
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 import styles from './SearchBar.module.css';
 
-interface PropsSearchBar {
-  onSearch: (query: string) => void;
-}
+export default function SearchBar() {
+  const { setQuery } = currentQuerySlice.actions;
+  const { setPage } = currentPageSlice.actions;
+  const dispatch = useAppDispatch();
 
-export default function SearchBar(props: PropsSearchBar) {
-  const { onSearch } = props;
-  const [storedQuery, setStoredQuery] = useSearchQuery();
+  const [storedQuery, setStoredQuery] = useLocalStorage();
+  const [textQuery, setTextQuery] = useState(storedQuery);
+
+  const [, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    dispatch(setQuery(storedQuery));
+    setSearchParams({ page: String(1), query: storedQuery || 'all' });
+  }, []);
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const currentQuery = form.search.value.trim();
-    onSearch(currentQuery);
     setStoredQuery(currentQuery);
-    localStorage.setItem('searchQuery', storedQuery);
+    dispatch(setQuery(currentQuery));
+    dispatch(setPage(1));
+    setSearchParams({ page: String(1), query: currentQuery || 'all' });
   }
 
-  function handleInputChange(event: React.ChangeEvent) {
-    const element = event.target as HTMLInputElement;
-    setStoredQuery(element.value);
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target as HTMLInputElement;
+    const currentQuery = input.value.trim();
+    setTextQuery(currentQuery);
   }
 
   return (
     <form className={styles.searchBar} onSubmit={handleSearch}>
       <input
         name="search"
+        value={textQuery}
         type="text"
-        value={storedQuery}
-        onChange={handleInputChange}
         placeholder="Search..."
+        onChange={handleChange}
       />
       <button type="submit">Search</button>
     </form>
