@@ -16,7 +16,7 @@ export default function CardList() {
 
   const navigate = useNavigate();
 
-  const { data, isFetching } = CharactersApi.useFetchCharactersQuery({
+  const { data, isFetching, isError } = CharactersApi.useFetchCharactersQuery({
     query,
     page,
   });
@@ -32,6 +32,13 @@ export default function CardList() {
   };
 
   if (isFetching) return <Spinner />;
+
+  if (isError)
+    return (
+      <div>
+        Error: Invalid query parameters. Please check your input and try again.
+      </div>
+    );
 
   return (
     <>
@@ -50,7 +57,7 @@ export default function CardList() {
           return null;
         })}
       </div>
-      <Pagination />
+      {data?.results.length !== 0 && <Pagination />}
     </>
   );
 }

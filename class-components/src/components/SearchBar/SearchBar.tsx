@@ -13,15 +13,26 @@ export default function SearchBar() {
   const { setPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [storedQuery, setStoredQuery] = useLocalStorage();
   const [textQuery, setTextQuery] = useState(storedQuery);
 
-  const [, setSearchParams] = useSearchParams();
-
   useEffect(() => {
-    dispatch(setQuery(storedQuery));
-    setSearchParams({ page: String(1), query: storedQuery || 'all' });
-  }, []);
+    const query = searchParams.get('query');
+    const page = Number(searchParams.get('page'));
+    if (query && page) {
+      dispatch(setQuery(query));
+      dispatch(setPage(page));
+      setTextQuery(query);
+    } else {
+      dispatch(setQuery(storedQuery));
+      setSearchParams({
+        page: '1',
+        query: storedQuery || 'all',
+      });
+    }
+  }, [searchParams]);
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
