@@ -6,6 +6,8 @@ import { currentPageSlice } from '../../store/reducers/CurrentPage';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 
+import Button from '../Button/Button';
+
 import styles from './SearchBar.module.css';
 
 export default function SearchBar() {
@@ -59,7 +61,7 @@ export default function SearchBar() {
         placeholder="Search..."
         onChange={handleChange}
       />
-      <button type="submit">Search</button>
+      <Button type="submit">Search</Button>
     </form>
   );
 }

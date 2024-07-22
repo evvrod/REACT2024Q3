@@ -10,7 +10,7 @@
   flex-direction: column;
   gap: 10px;
 
-  background-color: var(--color-background-modal);
+  background-color: var(--background-modal);
 
   z-index: 100;
 }

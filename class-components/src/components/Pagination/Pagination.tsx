@@ -1,9 +1,12 @@
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { currentPageSlice } from '../../store/reducers/CurrentPage';
 
 import CharactersApi from '../../services/CharacterService';
+
+import Button from '../Button/Button';
 
 import styles from './Pagination.module.css';
 
@@ -17,40 +20,38 @@ export default function Pagination() {
 
   const [, setSearchParams] = useSearchParams();
 
-  function handleClickNext() {
+  const handleClickNext = useCallback(() => {
     if (data?.next) {
       dispatch(increment());
       setSearchParams({ page: String(page + 1), query: query || 'all' });
     }
-  }
+  }, []);
 
-  function handleClickBack() {
+  const handleClickBack = useCallback(() => {
     if (data?.previous) {
       dispatch(decrement());
       setSearchParams({ page: String(page - 1), query: query || 'all' });
     }
-  }
+  }, []);
 
   return (
     <div className={styles.pagination}>
-      <button
-        type="button"
+      <Button
         className={styles.navigationButton}
         onClick={handleClickBack}
         disabled={!data?.previous}
       >
         Previous
-      </button>
+      </Button>
       <div>{page}</div>
 
-      <button
-        type="button"
+      <Button
         className={styles.navigationButton}
         onClick={handleClickNext}
         disabled={!data?.next}
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 }
