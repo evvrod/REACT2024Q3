@@ -14,10 +14,20 @@ export interface ICharacter {
   hair_color: string;
   eye_color: string;
   skin_color: string;
+  homeworld: string;
+  vehicles: string[];
+  starships: string[];
 }
 
 export interface ICharacterWithId extends ICharacter {
   id: number;
+}
+
+export interface ICharacterDetails {
+  character: ICharacter;
+  homeworld: IHomeworld;
+  vehicles: IVehicle[];
+  starships: IStarship[];
 }
 
 export interface IHomeworld {

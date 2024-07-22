@@ -1,10 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
 import {
   IApiCharacters,
   ICharacter,
   IStarship,
   IVehicle,
   IHomeworld,
+  ICharacterDetails,
 } from '../interfaces/Characters';
 
 type QueryArg = {
@@ -32,20 +37,47 @@ const CharactersApi = createApi({
         url: `/people/${idCharacter}`,
       }),
     }),
-    fetchHomeworld: build.query<IHomeworld, number>({
-      query: (idHomeworld) => ({
-        url: `/planets/${idHomeworld}`,
-      }),
-    }),
-    fetchVehicle: build.query<IVehicle, number>({
-      query: (idVehicle) => ({
-        url: `/vehicles/${idVehicle}`,
-      }),
-    }),
-    fetchStarship: build.query<IStarship, number>({
-      query: (idStarship) => ({
-        url: `/starships/${idStarship}`,
-      }),
+    fetchCharactersDetails: build.query<ICharacterDetails, number>({
+      queryFn: async (idCharacter, _queryApi, _extraOptions, fetchWithBQ) => {
+        try {
+          const characterResponse = await fetchWithBQ(`/people/${idCharacter}`);
+          const character = characterResponse.data as ICharacter;
+
+          const [homeworldResult, vehiclesResults, starshipsResults] =
+            await Promise.all([
+              fetchWithBQ(character.homeworld),
+              Promise.allSettled(
+                character.vehicles.map((vehicleUrl) => fetchWithBQ(vehicleUrl)),
+              ),
+              Promise.allSettled(
+                character.starships.map((starshipUrl) =>
+                  fetchWithBQ(starshipUrl),
+                ),
+              ),
+            ]);
+
+          const homeworld = homeworldResult.data as IHomeworld;
+
+          const vehicles = vehiclesResults
+            .filter((result) => result.status === 'fulfilled')
+            .map((result) => result.value.data as IVehicle);
+
+          const starships = starshipsResults
+            .filter((result) => result.status === 'fulfilled')
+            .map((result) => result.value.data as IStarship);
+
+          const details: ICharacterDetails = {
+            character,
+            homeworld,
+            vehicles,
+            starships,
+          };
+
+          return { data: details };
+        } catch (error) {
+          return { error: error as FetchBaseQueryError };
+        }
+      },
     }),
   }),
 });

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: { items: number[] } = {
+import { ICharacterWithId } from '../../interfaces/Characters';
+
+const initialState: { items: ICharacterWithId[] } = {
   items: [],
 };
 
@@ -8,13 +10,13 @@ export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
-    addItem(state, action: PayloadAction<number>) {
+    addItem(state, action: PayloadAction<ICharacterWithId>) {
       const STATE = state;
       STATE.items = [...STATE.items, action.payload];
     },
     removeItem(state, action: PayloadAction<number>) {
       const STATE = state;
-      STATE.items = STATE.items.filter((item) => item !== action.payload);
+      STATE.items = STATE.items.filter((item) => item.id !== action.payload);
     },
     removeAll(state) {
       const STATE = state;

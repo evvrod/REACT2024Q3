@@ -46,7 +46,7 @@ export default function CardList() {
         {data?.results.length === 0 && <div>No results found.</div>}
         {data?.results.map((item) => {
           const id = extractIdFromUrl(item.url);
-          if (id) return <Card key={id} item={item} id={id} />;
+          if (id) return <Card key={id} character={item} id={id} />;
           return null;
         })}
       </div>

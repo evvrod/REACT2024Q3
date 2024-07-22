@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './views/Layout/Layout';
 import HomePage from './views/HomePage/HomePage';
 import ErrorPage from './views/ErrorPage/ErrorPage';
-import Details, { DetailsLoader } from './components/Details/Details';
+import Details from './components/Details/Details';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 import './App.css';
@@ -20,7 +20,6 @@ const router = createBrowserRouter([
           {
             path: 'details/:details',
             element: <Details />,
-            loader: DetailsLoader,
             errorElement: <ErrorPage />,
           },
         ],

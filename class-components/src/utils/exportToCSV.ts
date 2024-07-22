@@ -1,10 +1,12 @@
-export default function exportToCSV(selectedItems: number[]) {
-  // const csvContent = selectedItems.map(item => {
-  //   const { name, description, url } = item;
-  //   return `${name},${description},${url}`;
-  // }).join('\n');
+import { ICharacterWithId } from '../interfaces/Characters';
 
-  const csvContent = selectedItems.join('\n');
+export default function exportToCSV(selectedItems: ICharacterWithId[]) {
+  const csvContent = selectedItems
+    .map(
+      (item) =>
+        `${item.name},${item.gender},${item.birth_year},${item.height},${item.skin_color},${item.hair_color},${item.eye_color}`,
+    )
+    .join('\n');
 
   const filename = `${selectedItems.length}_characters.csv`;
 
