@@ -1,26 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface ApiCharacters {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: ICharacter[];
-}
-
-interface ICharacter {
-  id: number;
-  url: string;
-  name: string;
-  birth_year: string;
-  gender: 'Male' | 'Female';
-  height: number;
-  hair_color: string;
-  eye_color: string;
-  skin_color: string;
-}
+import { ICharacterWithId } from '../../interfaces/Characters';
 
 export interface ICharactersState {
-  characters: ICharacter[];
+  characters: ICharacterWithId[];
 }
 
 const initialState: ICharactersState = {
@@ -31,7 +13,7 @@ export const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    setCharacters(state, action: PayloadAction<ICharacter[]>) {
+    setCharacters(state, action: PayloadAction<ICharacterWithId[]>) {
       const STATE = state;
       STATE.characters = action.payload;
     },

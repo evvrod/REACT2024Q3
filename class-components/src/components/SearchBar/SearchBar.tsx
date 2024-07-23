@@ -21,9 +21,10 @@ export default function SearchBar() {
   const [textQuery, setTextQuery] = useState(storedQuery);
 
   useEffect(() => {
-    const query = searchParams.get('query');
+    let query = searchParams.get('query');
     const page = Number(searchParams.get('page'));
     if (query && page) {
+      if (query === 'all') query = '';
       dispatch(setQuery(query));
       dispatch(setPage(page));
       setTextQuery(query);
@@ -39,16 +40,18 @@ export default function SearchBar() {
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const currentQuery = form.search.value.trim();
+    const currentQuery = (
+      form.elements.namedItem('search') as HTMLInputElement
+    ).value.trim();
     setStoredQuery(currentQuery);
     dispatch(setQuery(currentQuery));
     dispatch(setPage(1));
-    setSearchParams({ page: String(1), query: currentQuery || 'all' });
+    setSearchParams({ query: currentQuery || 'all', page: String(1) });
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const input = event.target as HTMLInputElement;
-    const currentQuery = input.value.trim();
+    const currentQuery = input.value;
     setTextQuery(currentQuery);
   }
 

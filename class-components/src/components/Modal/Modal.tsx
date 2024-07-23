@@ -8,7 +8,7 @@ import Button from '../Button/Button';
 
 import styles from './Modal.module.css';
 
-export default function Pagination() {
+export default function Modal() {
   const { items } = useAppSelector((state) => state.itemsReducer);
   const { removeAll } = itemsSlice.actions;
   const dispatch = useAppDispatch();

@@ -1,46 +1,24 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 
-import Layout from './views/Layout/Layout';
-import HomePage from './views/HomePage/HomePage';
-import ErrorPage from './views/ErrorPage/ErrorPage';
-import Details from './components/Details/Details';
+import { setupStore } from './store/store';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import router from './router';
 
 import './App.css';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
-      {
-        path: '',
-        element: <HomePage />,
-        children: [
-          {
-            path: 'details/:details',
-            element: <Details />,
-            errorElement: <ErrorPage />,
-          },
-        ],
-      },
-      {
-        path: 'error',
-        element: <ErrorPage />,
-      },
-    ],
-  },
-  {
-    path: '*',
-    element: <ErrorPage />,
-  },
-]);
+const store = setupStore();
 
 function App() {
   return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
+    <Provider store={store}>
+      <React.StrictMode>
+        <ErrorBoundary>
+          <RouterProvider router={router} />
+        </ErrorBoundary>
+      </React.StrictMode>
+    </Provider>
   );
 }
 

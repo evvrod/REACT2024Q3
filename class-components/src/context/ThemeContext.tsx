@@ -1,8 +1,11 @@
 import { createContext, useState, useEffect, useMemo, ReactNode } from 'react';
 
-type Theme = 'light' | 'dark';
+export enum Theme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
 
-interface ThemeContextProps {
+export interface ThemeContextProps {
   theme: Theme;
   toggleTheme: () => void;
 }
@@ -16,10 +19,12 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) =>
+      prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT,
+    );
   };
 
   const contextValue = useMemo(

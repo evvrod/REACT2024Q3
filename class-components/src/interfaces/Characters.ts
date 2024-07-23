@@ -5,11 +5,16 @@ export interface IApiCharacters {
   results: ICharacter[];
 }
 
+export enum Gender {
+  MALE = 'Male',
+  FEMALE = 'Female',
+}
+
 export interface ICharacter {
   url: string;
   name: string;
   birth_year: string;
-  gender: 'Male' | 'Female';
+  gender: Gender;
   height: number;
   hair_color: string;
   eye_color: string;

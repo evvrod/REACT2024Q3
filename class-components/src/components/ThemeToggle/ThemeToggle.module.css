@@ -36,13 +36,13 @@
   transition: left 0.15s ease;
 }
 
-.toggled-btn.toggled {
+.toggled-btn.dark {
   background-color: var(--color-text);
   outline: none;
   border: 2px solid var(--color-background);
 }
 
-.toggled-btn.toggled .thumb {
+.toggled-btn.dark .thumb {
   background-color: var(--color-background);
   left: calc(50px - 25px);
 }

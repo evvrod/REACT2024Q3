@@ -5,7 +5,11 @@ class Spinner extends Component {
   render() {
     return (
       <div className="spinner-overlay">
-        <div className="spinner-container" />
+        <div
+          role="progressbar"
+          aria-label="Loading"
+          className="spinner-container"
+        />
       </div>
     );
   }
