@@ -1,57 +1,57 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { currentPageSlice } from '../../store/reducers/CurrentPage';
+
+import CharactersApi from '../../services/CharacterService';
+
+import Button from '../Button/Button';
 
 import styles from './Pagination.module.css';
 
-interface PropsPagination {
-  onChangePage: (page: number) => void;
-  hasNext: boolean;
-  hasPrevious: boolean;
-}
+export default function Pagination() {
+  const { query } = useAppSelector((state) => state.currentQueryReducer);
+  const { page } = useAppSelector((state) => state.currentPageReducer);
+  const { increment, decrement } = currentPageSlice.actions;
+  const dispatch = useAppDispatch();
 
-export default function Pagination(props: PropsPagination) {
-  const { onChangePage, hasNext, hasPrevious } = props;
-  const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(
-    parseInt(searchParams.get('page') || '1', 10),
-  );
+  const { data } = CharactersApi.useFetchCharactersQuery({ page, query });
 
-  function handleClickNext() {
-    if (hasNext) {
-      const currentPage = page + 1;
-      onChangePage(currentPage);
-      setPage(currentPage);
+  const [, setSearchParams] = useSearchParams();
+
+  const handleClickNext = useCallback(() => {
+    if (data?.next) {
+      dispatch(increment());
+      setSearchParams({ page: String(page + 1), query: query || 'all' });
     }
-  }
+  }, []);
 
-  function handleClickBack() {
-    if (hasPrevious) {
-      const currentPage = page - 1;
-      onChangePage(currentPage);
-      setPage(currentPage);
+  const handleClickBack = useCallback(() => {
+    if (data?.previous) {
+      dispatch(decrement());
+      setSearchParams({ page: String(page - 1), query: query || 'all' });
     }
-  }
+  }, []);
 
   return (
     <div className={styles.pagination}>
-      <button
-        type="button"
+      <Button
         className={styles.navigationButton}
         onClick={handleClickBack}
-        disabled={!hasPrevious}
+        disabled={!data?.previous}
       >
         Previous
-      </button>
+      </Button>
       <div>{page}</div>
 
-      <button
-        type="button"
+      <Button
         className={styles.navigationButton}
         onClick={handleClickNext}
-        disabled={!hasNext}
+        disabled={!data?.next}
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 }

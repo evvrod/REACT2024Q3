@@ -1,34 +1,15 @@
-import { Suspense } from 'react';
-import {
-  useNavigate,
-  useLocation,
-  useLoaderData,
-  defer,
-  Await,
-  LoaderFunctionArgs,
-} from 'react-router-dom';
-
-import fetchStarWarsCharacterDetails, {
-  ApiResponseCharacterDetails,
-} from '../../services/apiStarWarsCharacterDetails';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 import Close from '../Close/Close';
 import Spinner from '../Spinner/Spinner';
 
-interface UseLoaderData {
-  data: ApiResponseCharacterDetails;
-}
-
-interface Vehicle {
-  name: string;
-}
-
-interface Starship {
-  name: string;
-}
+import CharactersApi from '../../services/CharacterService';
 
 export default function Details() {
-  const { data } = useLoaderData() as UseLoaderData;
+  const { details } = useParams();
+  const { data, isFetching } = CharactersApi.useFetchCharactersDetailsQuery(
+    Number(details),
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,49 +20,29 @@ export default function Details() {
     navigate(`/?${query}`);
   };
 
+  if (isFetching) return <Spinner />;
+
   return (
-    <Suspense fallback={<Spinner />}>
-      <Await resolve={data}>
-        {(resolvedData) => (
-          <>
-            <Close handlerClickClose={handlerClickClose} />
-            <h3>Base Info</h3>
-            <ul>
-              <li>height : {resolvedData.character.height}</li>
-              <li>hair color : {resolvedData.character.hair_color}</li>
-              <li>eye color : {resolvedData.character.eye_color}</li>
-              <li>skin color : {resolvedData.character.skin_color}</li>
-            </ul>
+    <>
+      <Close handlerClickClose={handlerClickClose} />
+      <h3>Base Info</h3>
+      <ul>
+        <li>height : {data?.character.height}</li>
+        <li>hair color : {data?.character.hair_color}</li>
+        <li>eye color : {data?.character.eye_color}</li>
+        <li>skin color : {data?.character.skin_color}</li>
+      </ul>
 
-            <h3>Home world</h3>
-            <ul>
-              <li>{resolvedData.homeworld.name}</li>
-            </ul>
+      <h3>Home world</h3>
+      <ul>
+        <li>{data?.homeworld.name}</li>
+      </ul>
 
-            <h3>Vehicles</h3>
-            <ul>
-              {resolvedData.vehicles.map((el: Vehicle) => (
-                <li key={el.name}>{el.name}</li>
-              ))}
-            </ul>
+      <h3>Vehicles</h3>
+      <ul>{data?.vehicles.map((el) => <li key={el.name}>{el.name}</li>)}</ul>
 
-            <h3>Star ships</h3>
-            <ul>
-              {resolvedData.starships.map((el: Starship) => (
-                <li key={el.name}>{el.name}</li>
-              ))}
-            </ul>
-          </>
-        )}
-      </Await>
-    </Suspense>
+      <h3>Star ships</h3>
+      <ul>{data?.starships.map((el) => <li key={el.name}>{el.name}</li>)}</ul>
+    </>
   );
-}
-
-export async function DetailsLoader({ params }: LoaderFunctionArgs) {
-  const { details } = params;
-
-  return defer({
-    data: fetchStarWarsCharacterDetails(Number(details)),
-  });
 }
