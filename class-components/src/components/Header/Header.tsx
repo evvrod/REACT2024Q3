@@ -5,7 +5,11 @@ import styles from './Header.module.css';
 export default function Header() {
   return (
     <header className={styles.header}>
-      <img src={starWarsLogo} alt="Star Wars logo" className={styles.icon} />
+      <img
+        src={starWarsLogo.src}
+        alt="Star Wars logo"
+        className={styles.icon}
+      />
       <ThemeToggle />
     </header>
   );

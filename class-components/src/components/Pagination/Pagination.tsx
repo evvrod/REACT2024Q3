@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { currentPageSlice } from '../../store/reducers/CurrentPage';
@@ -17,22 +17,27 @@ export default function Pagination() {
   const dispatch = useAppDispatch();
 
   const { data } = CharactersApi.useFetchCharactersQuery({ page, query });
-
-  const [, setSearchParams] = useSearchParams();
+  const router = useRouter();
 
   const handleClickNext = useCallback(() => {
     if (data?.next) {
       dispatch(increment());
-      setSearchParams({ page: String(page + 1), query: query || 'all' });
+      router.push({
+        pathname: '/',
+        query: { page: String(page + 1), query: query || 'all' },
+      });
     }
-  }, []);
+  }, [data?.next, dispatch, increment, page, query, router]);
 
   const handleClickBack = useCallback(() => {
     if (data?.previous) {
       dispatch(decrement());
-      setSearchParams({ page: String(page - 1), query: query || 'all' });
+      router.push({
+        pathname: '/',
+        query: { page: String(page - 1), query: query || 'all' },
+      });
     }
-  }, []);
+  }, [data?.previous, dispatch, increment, page, query, router]);
 
   return (
     <div className={styles.pagination}>
