@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { useAppSelector } from '../../hooks/useRedux';
 import extractIdFromUrl from '../../utils/extractIdFromUrl';
 
@@ -11,23 +11,32 @@ import CharactersApi from '../../services/CharacterService';
 import styles from './CardList.module.css';
 
 export default function CardList() {
+  const router = useRouter();
+
   const { query } = useAppSelector((state) => state.currentQueryReducer);
   const { page } = useAppSelector((state) => state.currentPageReducer);
-
-  const navigate = useNavigate();
 
   const { data, isFetching, isError } = CharactersApi.useFetchCharactersQuery({
     query,
     page,
   });
 
-  const handelCloseDetails = () => {
-    navigate(`/?query=${query}&page=${page}`);
+  const handelCloseDetails = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.tagName !== 'H2') {
+      router.push({
+        pathname: '/',
+        query: { query, page },
+      });
+    }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handelKeyCloseDetails = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === 'Enter') {
-      handelCloseDetails();
+      router.push({
+        pathname: '/',
+        query: { query, page },
+      });
     }
   };
 
@@ -44,11 +53,11 @@ export default function CardList() {
     <>
       <div
         className={styles.cardList}
-        onClick={handelCloseDetails}
+        onClick={(event) => handelCloseDetails(event)}
         role="button"
         tabIndex={0}
-        onKeyDown={handleKeyPress}
         aria-label="Close details"
+        onKeyDown={(event) => handelKeyCloseDetails(event)}
       >
         {data?.results.length === 0 && <div>No results found.</div>}
         {data?.results.map((item) => {

@@ -9,13 +9,13 @@ export default function Close(props: PropsClose) {
   return (
     <button
       type="button"
-      className={styles.closeBtn}
+      className={styles['close-btn']}
       onClick={handlerClickClose}
     >
       <div className={styles.wrapper}>
         <div className={styles.leftright} />
         <div className={styles.rightleft} />
-        <span className={styles.labelBtn}>Close</span>
+        <span className={styles['label-btn']}>Close</span>
       </div>
     </button>
   );

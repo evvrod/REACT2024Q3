@@ -1,5 +1,7 @@
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
 import { ICharacter } from '../../interfaces/Characters';
 
@@ -14,8 +16,9 @@ interface PropsCard {
 
 export default function Card(props: PropsCard) {
   const { id, character } = props;
-  const location = useLocation();
-  const query = location.search.substring(1);
+
+  const router = useRouter();
+  const { query, page } = router.query;
 
   const { items } = useAppSelector((state) => state.itemsReducer);
   const { addItem, removeItem } = itemsSlice.actions;
@@ -50,9 +53,9 @@ export default function Card(props: PropsCard) {
         />
         <label htmlFor={`checkbox-${id}`}>
           <Link
-            to={`/details/${id}/?${query}`}
-            onClick={(event) => {
-              event.stopPropagation();
+            href={{
+              pathname: `/details/${id}`,
+              query: { query, page },
             }}
           >
             <h2>{character.name}</h2>

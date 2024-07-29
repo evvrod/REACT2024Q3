@@ -1,18 +1,22 @@
 import githubLogo from '../../assets/github-logo.png';
 import courseImage from '../../assets/RS.svg';
 
-import './Footer.css';
+import styles from './Footer.module.css';
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       <a
         href="https://github.com/evvrod"
         target="_blank"
         rel="noopener noreferrer"
         className="footer-url"
       >
-        <img src={githubLogo} alt="GitHub" className="footer-icon" />
+        <img
+          src={githubLogo.src}
+          alt="GitHub"
+          className={styles['footer-icon']}
+        />
         evvrod
       </a>
 
@@ -24,7 +28,11 @@ export default function Footer() {
         rel="noopener noreferrer"
         className="footer-url"
       >
-        <img src={courseImage} alt="Course" className="footer-icon" />
+        <img
+          src={courseImage.src}
+          alt="Course"
+          className={styles['footer-icon']}
+        />
       </a>
     </footer>
   );

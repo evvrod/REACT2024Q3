@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver';
+
 import { ICharacterWithId } from '../interfaces/Characters';
 
 export default function exportToCSV(selectedItems: ICharacterWithId[]) {
@@ -11,13 +13,5 @@ export default function exportToCSV(selectedItems: ICharacterWithId[]) {
   const filename = `${selectedItems.length}_characters.csv`;
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  if (link.download !== undefined) {
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+  saveAs(blob, filename);
 }

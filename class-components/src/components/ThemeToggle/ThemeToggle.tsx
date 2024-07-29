@@ -17,7 +17,7 @@ export default function ThemeToggle() {
       <span>Toggle theme</span>
       <button
         type="button"
-        className={`${styles.toggledBtn} ${theme === Theme.DARK ? styles.dark : ''}`}
+        className={`${styles['toggled-btn']} ${theme === Theme.DARK ? styles.dark : ''}`}
         onClick={toggleTheme}
       >
         <div className={styles.thumb} />

@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
+
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useRedux';
 import { currentQuerySlice } from '../../store/reducers/CurrentQuery';
 import { currentPageSlice } from '../../store/reducers/CurrentPage';
@@ -7,35 +8,34 @@ import { currentPageSlice } from '../../store/reducers/CurrentPage';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 import Button from '../Button/Button';
-
 import styles from './SearchBar.module.css';
 
 export default function SearchBar() {
+  const router = useRouter();
+
   const { setQuery } = currentQuerySlice.actions;
   const { setPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
-
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const [storedQuery, setStoredQuery] = useLocalStorage();
   const [textQuery, setTextQuery] = useState(storedQuery);
 
   useEffect(() => {
-    let query = searchParams.get('query');
-    const page = Number(searchParams.get('page'));
+    const { query, page } = router.query;
+
     if (query && page) {
-      if (query === 'all') query = '';
-      dispatch(setQuery(query));
-      dispatch(setPage(page));
-      setTextQuery(query);
+      const searchQuery = query === 'all' ? '' : (query as string);
+      dispatch(setQuery(searchQuery));
+      dispatch(setPage(Number(page)));
+      setTextQuery(searchQuery);
     } else {
       dispatch(setQuery(storedQuery));
-      setSearchParams({
-        page: '1',
-        query: storedQuery || 'all',
+      router.push({
+        pathname: '/',
+        query: { page: '1', query: storedQuery || 'all' },
       });
     }
-  }, [searchParams]);
+  }, [router.query]);
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +46,10 @@ export default function SearchBar() {
     setStoredQuery(currentQuery);
     dispatch(setQuery(currentQuery));
     dispatch(setPage(1));
-    setSearchParams({ query: currentQuery || 'all', page: String(1) });
+    router.push({
+      pathname: router.pathname,
+      query: { query: currentQuery || 'all', page: String(1) },
+    });
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
