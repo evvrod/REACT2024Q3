@@ -1,18 +1,15 @@
-import { Component } from 'react';
-import './Spinner.css';
+import React from 'react';
 
-class Spinner extends Component {
-  render() {
-    return (
-      <div className="spinner-overlay">
-        <div
-          role="progressbar"
-          aria-label="Loading"
-          className="spinner-container"
-        />
-      </div>
-    );
-  }
+import styles from './Spinner.module.css';
+
+export default function Spinner(): React.ReactNode {
+  return (
+    <div className={styles['spinner-overlay']}>
+      <div
+        role="progressbar"
+        aria-label="Loading"
+        className={styles['spinner-container']}
+      />
+    </div>
+  );
 }
-
-export default Spinner;

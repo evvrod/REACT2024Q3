@@ -1,11 +1,17 @@
+import React from 'react';
+
 import starWarsLogo from '../../assets/Star_Wars_Logo.svg';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import styles from './Header.module.css';
 
-export default function Header() {
+export default function Header(): React.ReactNode {
   return (
     <header className={styles.header}>
-      <img src={starWarsLogo} alt="Star Wars logo" className={styles.icon} />
+      <img
+        src={starWarsLogo.src}
+        alt="Star Wars logo"
+        className={styles.icon}
+      />
       <ThemeToggle />
     </header>
   );

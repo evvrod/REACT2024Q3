@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/useRedux';
-import { currentQuerySlice } from '../../store/reducers/CurrentQuery';
-import { currentPageSlice } from '../../store/reducers/CurrentPage';
+import React, { useEffect, useState } from 'react';
+
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 
@@ -10,32 +8,24 @@ import Button from '../Button/Button';
 
 import styles from './SearchBar.module.css';
 
-export default function SearchBar() {
-  const { setQuery } = currentQuerySlice.actions;
-  const { setPage } = currentPageSlice.actions;
-  const dispatch = useAppDispatch();
-
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function SearchBar(): React.ReactNode {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const page = searchParams.get('page');
 
   const [storedQuery, setStoredQuery] = useLocalStorage();
   const [textQuery, setTextQuery] = useState(storedQuery);
 
   useEffect(() => {
-    let query = searchParams.get('query');
-    const page = Number(searchParams.get('page'));
     if (query && page) {
-      if (query === 'all') query = '';
-      dispatch(setQuery(query));
-      dispatch(setPage(page));
-      setTextQuery(query);
+      const searchQuery = query === 'all' ? '' : (query as string);
+      setTextQuery(searchQuery);
     } else {
-      dispatch(setQuery(storedQuery));
-      setSearchParams({
-        page: '1',
-        query: storedQuery || 'all',
-      });
+      router.push(`${pathname}?query=${storedQuery || 'all'}&page=1`);
     }
-  }, [searchParams]);
+  }, [router]);
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,9 +34,7 @@ export default function SearchBar() {
       form.elements.namedItem('search') as HTMLInputElement
     ).value.trim();
     setStoredQuery(currentQuery);
-    dispatch(setQuery(currentQuery));
-    dispatch(setPage(1));
-    setSearchParams({ query: currentQuery || 'all', page: String(1) });
+    router.push(`/?query=${currentQuery || 'all'}&page=1`);
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

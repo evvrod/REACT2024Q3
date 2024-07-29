@@ -1,6 +1,8 @@
+import React,  { useContext } from 'react';
+
 import { describe, test, expect } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
-import { useContext } from 'react';
+
 import { ThemeProvider, ThemeContext } from '../src/context/ThemeContext';
 
 function TestComponent() {
@@ -54,6 +56,4 @@ describe('ThemeProvider', () => {
 
     expect(document.body.className).toBe('dark-theme');
   });
-
-  
 });

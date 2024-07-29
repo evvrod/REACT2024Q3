@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { expect, describe, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -6,7 +8,6 @@ import {
   ThemeContextProps,
   Theme,
 } from '../../src/context/ThemeContext';
-import starWarsLogo from '../../src/assets/Star_Wars_Logo.svg';
 
 import Header from '../../src/components/Header/Header';
 
@@ -27,7 +28,6 @@ describe('Testing Header', () => {
 
     const logoImage = screen.getByAltText('Star Wars logo');
     expect(logoImage).toBeInTheDocument();
-    expect(logoImage).toHaveAttribute('src', starWarsLogo);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
   });

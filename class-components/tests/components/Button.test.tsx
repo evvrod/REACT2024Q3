@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { expect, describe, test, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -25,12 +27,7 @@ describe('Testing Button', () => {
 
   test('renders Button component correctly with all props', async () => {
     render(
-      <Button
-        className="Test Class Name"
-        onClick={onClick}
-        // disabled={true}
-        type="submit"
-      >
+      <Button className="Test Class Name" onClick={onClick} type="submit">
         Button
       </Button>,
     );

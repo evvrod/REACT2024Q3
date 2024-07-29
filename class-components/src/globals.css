@@ -1,0 +1,68 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --color-primary: #ffe81f;
+  --color-secondary: #5574ca;
+
+  /* colors dark*/
+  --color-text: #ffffffde;
+  --color-background: #242424;
+  --color-background-modal-dark: #534a4a;
+  --color-background-button-dark: #948f8f;
+
+  /* colors light */
+  --color-text-light: #000000de;
+  --color-background-light: #ffffff;
+  --color-background-modal-light: #777676;
+  --color-background-button-light: #bbb8b8;
+}
+
+body.light-theme {
+  background-color: var(--color-background-light);
+  color: var(--color-text-light);
+  --background-modal: var(--color-background-modal-light);
+  --color-background-button: var(--color-background-button-light);
+}
+
+body.dark-theme {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  --background-modal: var(--color-background-modal-dark);
+  --color-background-button: var(--color-background-button-dark);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.2em;
+  line-height: 1.1;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 1.1;
+  color: var(--color-secondary);
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
