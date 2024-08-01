@@ -43,6 +43,12 @@ body.dark-theme {
   margin: 0;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 h1 {
   font-size: 2.2em;
   line-height: 1.1;

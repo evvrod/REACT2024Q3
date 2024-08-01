@@ -1,11 +1,17 @@
+'use client';
+
+import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './Close.module.css';
 
-interface PropsClose {
-  handlerClickClose: () => void;
-}
+export default function Close(): React.ReactNode {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-export default function Close(props: PropsClose) {
-  const { handlerClickClose } = props;
+  const handlerClickClose = () => {
+    router.push(`/?${searchParams.toString()}`);
+  };
+
   return (
     <button
       type="button"

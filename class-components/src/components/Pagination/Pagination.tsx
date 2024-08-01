@@ -1,59 +1,52 @@
-import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+'use client';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { currentPageSlice } from '../../store/reducers/CurrentPage';
-
-import CharactersApi from '../../services/CharacterService';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useCallback } from 'react';
 
 import Button from '../Button/Button';
 
 import styles from './Pagination.module.css';
 
-export default function Pagination() {
-  const { query } = useAppSelector((state) => state.currentQueryReducer);
-  const { page } = useAppSelector((state) => state.currentPageReducer);
-  const { increment, decrement } = currentPageSlice.actions;
-  const dispatch = useAppDispatch();
+interface IPaginationProps {
+  next: string | null;
+  previous: string | null;
+}
 
-  const { data } = CharactersApi.useFetchCharactersQuery({ page, query });
+export default function Pagination({
+  next,
+  previous,
+}: IPaginationProps): React.ReactNode {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const page = searchParams.get('page');
 
   const handleClickNext = useCallback(() => {
-    if (data?.next) {
-      dispatch(increment());
-      router.push({
-        pathname: '/',
-        query: { page: String(page + 1), query: query || 'all' },
-      });
+    if (next && page) {
+      router.push(`/?query=${query || 'all'}&page=${Number(page) + 1}`);
     }
-  }, [data?.next, dispatch, increment, page, query, router]);
+  }, [page, query]);
 
   const handleClickBack = useCallback(() => {
-    if (data?.previous) {
-      dispatch(decrement());
-      router.push({
-        pathname: '/',
-        query: { page: String(page - 1), query: query || 'all' },
-      });
+    if (previous && page) {
+      router.push(`/?query=${query || 'all'}&page=${Number(page) - 1}`);
     }
-  }, [data?.previous, dispatch, increment, page, query, router]);
+  }, [page, query]);
 
   return (
     <div className={styles.pagination}>
       <Button
         className={styles.navigationButton}
         onClick={handleClickBack}
-        disabled={!data?.previous}
+        disabled={!previous}
       >
         Previous
       </Button>
       <div>{page}</div>
-
       <Button
         className={styles.navigationButton}
         onClick={handleClickNext}
-        disabled={!data?.next}
+        disabled={!next}
       >
         Next
       </Button>

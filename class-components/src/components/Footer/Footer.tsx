@@ -1,9 +1,11 @@
+import React from 'react';
+
 import githubLogo from '../../assets/github-logo.png';
 import courseImage from '../../assets/RS.svg';
 
 import styles from './Footer.module.css';
 
-export default function Footer() {
+export default function Footer(): React.ReactNode {
   return (
     <footer className={styles.footer}>
       <a

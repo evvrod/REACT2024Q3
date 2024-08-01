@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, useMemo, ReactNode } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  ReactNode,
+} from 'react';
 
 export enum Theme {
   LIGHT = 'light',
@@ -18,7 +24,9 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+}: ThemeProviderProps): React.ReactNode {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
 
   const toggleTheme = () => {

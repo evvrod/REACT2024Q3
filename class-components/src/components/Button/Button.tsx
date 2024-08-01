@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from './Button.module.css';
 
 interface ButtonProps {
@@ -14,7 +16,7 @@ export default function Button({
   onClick = () => {},
   disabled = false,
   type = 'button',
-}: ButtonProps) {
+}: ButtonProps): React.ReactNode {
   return (
     <button
       className={`${styles.button} ${className}`}
