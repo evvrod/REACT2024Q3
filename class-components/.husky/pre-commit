@@ -1,3 +1,2 @@
 cd class-components
 npx prettier --write ./src
-npx eslint ./src

@@ -1,11 +1,14 @@
-import { useRouter } from 'next/router';
+'use client';
+
 import Link from 'next/link';
 
 import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
-import { ICharacter } from '../../interfaces/Characters';
 
-import { itemsSlice } from '../../store/reducers/Items';
+import { useSearchParams } from 'next/navigation';
+
+import { ICharacter } from '../../interfaces/Characters';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { itemsSlice } from '../../lib/features/Items';
 
 import styles from './Card.module.css';
 
@@ -15,10 +18,11 @@ interface PropsCard {
 }
 
 export default function Card(props: PropsCard) {
-  const { id, character } = props;
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const page = searchParams.get('page');
 
-  const router = useRouter();
-  const { query, page } = router.query;
+  const { id, character } = props;
 
   const { items } = useAppSelector((state) => state.itemsReducer);
   const { addItem, removeItem } = itemsSlice.actions;

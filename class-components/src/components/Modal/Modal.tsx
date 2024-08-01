@@ -1,7 +1,9 @@
+'use client';
+
 import { useCallback } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { itemsSlice } from '../../store/reducers/Items';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { itemsSlice } from '../../lib/features/Items';
 import exportToCSV from '../../utils/exportToCSV';
 
 import Button from '../Button/Button';
@@ -20,6 +22,8 @@ export default function Modal() {
   const handleClickDownload = useCallback(() => {
     exportToCSV(items);
   }, [items]);
+
+  if (items.length === 0) return null;
 
   return (
     <div className={styles.modal}>

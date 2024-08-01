@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext } from 'react';
 import { ThemeContext, Theme } from '../../context/ThemeContext';
 
@@ -11,7 +13,6 @@ export default function ThemeToggle() {
   }
 
   const { theme, toggleTheme } = themeContext;
-
   return (
     <div className={styles.wrapper}>
       <span>Toggle theme</span>
@@ -19,6 +20,7 @@ export default function ThemeToggle() {
         type="button"
         className={`${styles['toggled-btn']} ${theme === Theme.DARK ? styles.dark : ''}`}
         onClick={toggleTheme}
+        aria-label="toggle-theme"
       >
         <div className={styles.thumb} />
       </button>

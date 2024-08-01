@@ -1,11 +1,13 @@
-import { useRouter } from 'next/router';
+'use client';
 
-import Link from 'next/link';
 import { useEffect } from 'react';
 
-import styles from './404.module.css';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-export default function ErrorPage() {
+import styles from './global-error.module.css';
+
+export default function Error() {
   const router = useRouter();
 
   useEffect(() => {
@@ -17,9 +19,8 @@ export default function ErrorPage() {
   return (
     <div className={styles.background}>
       <div className={styles.wrapper}>
-        <p className={styles.title}>ERROR 404</p>
         <p className={styles.text}>
-          <span>Page not found. Go </span>
+          <span>Ops... Something went wrong. Go </span>
           <Link href="/" className={styles.text}>
             Home
           </Link>

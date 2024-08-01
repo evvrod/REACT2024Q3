@@ -1,41 +1,32 @@
-import { useRouter } from 'next/router';
+'use client';
 
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks/useRedux';
-import { currentQuerySlice } from '../../store/reducers/CurrentQuery';
-import { currentPageSlice } from '../../store/reducers/CurrentPage';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 import Button from '../Button/Button';
+
 import styles from './SearchBar.module.css';
 
 export default function SearchBar() {
   const router = useRouter();
-
-  const { setQuery } = currentQuerySlice.actions;
-  const { setPage } = currentPageSlice.actions;
-  const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const page = searchParams.get('page');
 
   const [storedQuery, setStoredQuery] = useLocalStorage();
   const [textQuery, setTextQuery] = useState(storedQuery);
 
   useEffect(() => {
-    const { query, page } = router.query;
-
     if (query && page) {
       const searchQuery = query === 'all' ? '' : (query as string);
-      dispatch(setQuery(searchQuery));
-      dispatch(setPage(Number(page)));
       setTextQuery(searchQuery);
     } else {
-      dispatch(setQuery(storedQuery));
-      router.push({
-        pathname: '/',
-        query: { page: '1', query: storedQuery || 'all' },
-      });
+      router.push(`${pathname}?query=${storedQuery || 'all'}&page=1`);
     }
-  }, [router.query]);
+  }, [router]);
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,12 +35,7 @@ export default function SearchBar() {
       form.elements.namedItem('search') as HTMLInputElement
     ).value.trim();
     setStoredQuery(currentQuery);
-    dispatch(setQuery(currentQuery));
-    dispatch(setPage(1));
-    router.push({
-      pathname: router.pathname,
-      query: { query: currentQuery || 'all', page: String(1) },
-    });
+    router.push(`/?query=${currentQuery || 'all'}&page=1`);
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
