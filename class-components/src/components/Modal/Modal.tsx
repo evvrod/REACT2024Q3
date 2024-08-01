@@ -19,7 +19,7 @@ export default function Modal() {
 
   const handleClickDownload = useCallback(() => {
     exportToCSV(items);
-  }, []);
+  }, [items]);
 
   return (
     <div className={styles.modal}>
