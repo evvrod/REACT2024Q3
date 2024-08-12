@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
-import extractIdFromUrl from '../../src/utils/extractIdFromUrl'; // Убедитесь, что путь к функции правильный
+import extractIdFromUrl from '../../src/utils/extractIdFromUrl'; 
 
 describe('extractIdFromUrl function', () => {
   test('extracts ID from a URL with a numeric ID at the end', () => {

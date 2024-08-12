@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { expect, describe, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -10,5 +12,4 @@ describe('Testing Spinner', () => {
     const spinner = screen.getByRole('progressbar');
     expect(spinner).toBeInTheDocument();
   });
-  
 });

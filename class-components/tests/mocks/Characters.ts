@@ -1,8 +1,77 @@
 import {
+  IApiCharacters,
   ICharacterWithId,
   ICharacter,
   Gender,
 } from '../../src/interfaces/Characters';
+
+export const mockApiCharacters: IApiCharacters = {
+  count:20,
+  next: 'https://example.com/1',
+  previous: 'https://example.com/3',
+  results: [
+  {
+    url: 'https://example.com/1',
+    name: 'Luke Skywalker',
+    birth_year: '19BBY',
+    gender: Gender.MALE,
+    height: 172,
+    hair_color: 'blond',
+    eye_color: 'blue',
+    skin_color: 'fair',
+    homeworld: 'https://swapi.dev/api/planets/2/',
+    vehicles: [
+      'https://swapi.dev/api/vehicles/14/',
+      'https://swapi.dev/api/vehicles/30/',
+    ],
+    starships: [
+      'https://swapi.dev/api/starships/12/',
+      'https://swapi.dev/api/starships/22/',
+    ],
+  },
+  {
+    url: 'https://example.com/2',
+    name: 'Darth Vader',
+    birth_year: '41.9BBY',
+    gender: Gender.MALE,
+    height: 202,
+    hair_color: 'none',
+    eye_color: 'yellow',
+    skin_color: 'white',
+    homeworld: 'https://swapi.dev/api/planets/1/',
+    vehicles: [],
+    starships: [
+      'https://swapi.dev/api/starships/13/',
+      'https://swapi.dev/api/starships/21/',
+    ],
+  },
+  {
+    url: 'https://example.com/3',
+    name: 'Leia Organa',
+    birth_year: '19BBY',
+    gender: Gender.FEMALE,
+    height: 150,
+    hair_color: 'brown',
+    eye_color: 'brown',
+    skin_color: 'light',
+    homeworld: 'https://swapi.dev/api/planets/2/',
+    vehicles: ['https://swapi.dev/api/vehicles/30/'],
+    starships: ['https://swapi.dev/api/starships/11/'],
+  },
+  {
+    url: 'https://example.com/4',
+    name: 'Han Solo',
+    birth_year: '29BBY',
+    gender: Gender.MALE,
+    height: 180,
+    hair_color: 'brown',
+    eye_color: 'brown',
+    skin_color: 'fair',
+    homeworld: 'https://swapi.dev/api/planets/22/',
+    vehicles: ['https://swapi.dev/api/vehicles/24/'],
+    starships: ['https://swapi.dev/api/starships/10/'],
+  },
+]}
 
 export const mockCharacters: ICharacter[] = [
   {

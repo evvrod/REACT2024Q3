@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -5,12 +7,13 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { configureStore, Store } from '@reduxjs/toolkit';
 
-import { mockCharactersWithId } from '../mocks/Characters';
-import itemsReducer from '../../src/store/reducers/Items';
+import itemsReducer from '../../src/lib/features/Items';
 import { ICharacterWithId } from '../../src/interfaces/Characters';
 import exportToCSV from '../../src/utils/exportToCSV';
 
 import Modal from '../../src/components/Modal/Modal';
+
+import { mockCharactersWithId } from '../mocks/Characters';
 
 vi.mock('../../src/utils/exportToCSV', () => ({
   __esModule: true,

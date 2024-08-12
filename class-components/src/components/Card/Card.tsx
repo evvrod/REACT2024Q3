@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
-import { ICharacter } from '../../interfaces/Characters';
+'use client';
 
-import { itemsSlice } from '../../store/reducers/Items';
+import React, { useState, useEffect } from 'react';
+
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
+import { ICharacter } from '../../interfaces/Characters';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { itemsSlice } from '../../lib/features/Items';
 
 import styles from './Card.module.css';
 
@@ -13,9 +17,11 @@ interface PropsCard {
 }
 
 export default function Card(props: PropsCard) {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const page = searchParams.get('page');
+
   const { id, character } = props;
-  const location = useLocation();
-  const query = location.search.substring(1);
 
   const { items } = useAppSelector((state) => state.itemsReducer);
   const { addItem, removeItem } = itemsSlice.actions;
@@ -50,9 +56,9 @@ export default function Card(props: PropsCard) {
         />
         <label htmlFor={`checkbox-${id}`}>
           <Link
-            to={`/details/${id}/?${query}`}
-            onClick={(event) => {
-              event.stopPropagation();
+            href={{
+              pathname: `/details/${id}`,
+              query: { query, page },
             }}
           >
             <h2>{character.name}</h2>
